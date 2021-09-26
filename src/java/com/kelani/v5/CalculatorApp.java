@@ -1,12 +1,14 @@
 package com.kelani.v5;
 
 import com.kelani.v5.input.CommandLineInputs;
+import com.kelani.v5.input.InavalidInputException;
 import com.kelani.v5.input.Inputs;
 import com.kelani.v5.operation.InvalidCalcOperationException;
 import com.kelani.v5.operation.Operation;
 import com.kelani.v5.operation.OperationFactory;
 import com.kelani.v5.repository.FileNumberRepository;
 import com.kelani.v5.repository.NumberRepository;
+import com.kelani.v5.repository.NumberRepositoryException;
 import com.kelani.v5.ui.CmdLineUI;
 import com.kelani.v5.ui.UI;
 
@@ -26,18 +28,18 @@ public class CalculatorApp {
         this.ui = ui;
     }
 
-    public void execute() throws IOException {//we will change this in  the future
-
+    public void execute()  {
+  try{
         String operator = inputs.getOperator();
         Double[] numbers = numberRepository.getNumbers();
         Operation operation = operationFactory.getInstance(operator);
-        Double result = null;
-        try {
-            result = operation.execute(numbers);
-        } catch (InvalidCalcOperationException e) {
-            ui.showMessage("Error occurred ! "+ e.getMessage());
-        }
+        Double result  = operation.execute(numbers);
         ui.showMessage("The result is " + result);
+     } catch (InvalidCalcOperationException | InavalidInputException | NumberRepositoryException e){
+          ui.showMessage("Error Occurred! " + e.getMessage());
+
+  }
+
 
     }
 }

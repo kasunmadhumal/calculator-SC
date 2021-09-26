@@ -9,15 +9,15 @@ public class CommandLineInputs implements Inputs{
         this.args = arguments;
     }
 
-    public String getOperator() {
+    public String getOperator() throws InavalidInputException {
+
         if (args.length == 0) {
-            System.out.println("Please provie the operation as an argument");
-            return "";
+
+            throw new InavalidInputException("Please provie the operation as an argument");
         }
         String operator = args[0];
         if (!(operator.equals("add") || operator.equals("sub") || operator.equals("mul") || operator.equals("div"))) {
-            System.out.println("please provide the add , sub or mul as the operator argument");
-            return "";
+            throw new InavalidInputException("please provide the add , sub or mul as the operator argument");
 
         }
         return operator;
